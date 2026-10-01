@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { InstallApp } from "@/components/install-app"
 import { HomePulse } from "@/components/pulse-screens"
 import { Avatar, Progress, who } from "@/components/ui"
 import { bondIcon, greeting, mainLeague, nextSelfQuestion, playerStats, standings, timeAgo } from "@/lib/logic"
@@ -80,6 +81,16 @@ export function HomeScreen() {
       )}
 
       <Link href="/play" className="btn btn-primary">Jugar ahora</Link>
+
+      <Link href="/preguntas" className="card between">
+        <div>
+          <p className="kicker">Voluntario</p>
+          <h2 className="display" style={{ fontSize: "1.3rem" }}>30 preguntas de hoy</h2>
+          <p className="muted">Si quieres. A medianoche salen otras 30 y la predicción te lee mejor.</p>
+        </div>
+      </Link>
+
+      <InstallApp />
 
       <HomePulse />
 

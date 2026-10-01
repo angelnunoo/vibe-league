@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   title: "VibeLeague",
   description: "¿Cuánto conoces realmente a tus amigos?",
   applicationName: "VibeLeague",
+  appleWebApp: {
+    capable: true,
+    title: "VibeLeague",
+    statusBarStyle: "black-translucent",
+  },
 }
 
 export const viewport: Viewport = {

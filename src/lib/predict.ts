@@ -1,3 +1,4 @@
+import { dailyQuestionById } from "@/lib/daily-pack"
 import { QUESTIONS, type Question } from "@/lib/questions"
 import type { Choice, Trait } from "@/lib/types"
 
@@ -22,6 +23,12 @@ function abstain(): Resolution {
 
 function predictFromEvidence(question: Question, answers: RealAnswer[], catalog: Question[]): Resolution {
   const byId = new Map(catalog.map((item) => [item.id, item]))
+  if (!byId.has(question.id)) byId.set(question.id, question)
+  for (const answer of answers) {
+    if (byId.has(answer.questionId)) continue
+    const extra = dailyQuestionById(answer.questionId)
+    if (extra) byId.set(extra.id, extra)
+  }
   const traits = TRAITS.filter((trait) => question.leans[trait] !== undefined)
   const evidence: Record<Trait, number> = {
     outgoing: 0,

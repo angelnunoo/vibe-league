@@ -1,5 +1,5 @@
-import { activeEvent, questionIsLiveEvent } from "@/lib/events"
-import { questionById, QUESTIONS } from "@/lib/questions"
+import { activeEvent, findQuestion, questionIsLiveEvent } from "@/lib/events"
+import { QUESTIONS } from "@/lib/questions"
 import { levelFromXp, pointsForGuess, scaleByConfidence, SELF_ANSWER_XP, titleFor, xpForGuess } from "@/lib/progression"
 import { ABSTAIN_MESSAGE } from "@/lib/predict"
 import type {
@@ -270,7 +270,7 @@ export function withSelfAnswer(
     ],
   }
   if (!input.silent) {
-    const question = questionById(input.questionId)
+    const question = findQuestion(input.questionId)
     next = pushActivity(next, {
       id: uid(),
       emoji: question?.emoji ?? "✨",
@@ -800,7 +800,7 @@ export function reviseSelf(user: UserState, questionId: string, choice: Choice, 
       { questionId, from: current.choice, to: choice, at: now.toISOString(), previousAt: current.at },
     ],
   }
-  const question = questionById(questionId)
+  const question = findQuestion(questionId)
   next = pushActivity(next, {
     id: uid(),
     emoji: question?.emoji ?? "📈",

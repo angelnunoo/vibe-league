@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { knowledge, levelFromXp } from "@/lib/progression"
 import { ACHIEVEMENTS } from "@/lib/progression"
-import { CATEGORY_LABEL, questionById, QUESTIONS } from "@/lib/questions"
+import { InstallApp } from "@/components/install-app"
+import { findQuestion } from "@/lib/events"
+import { CATEGORY_LABEL, QUESTIONS } from "@/lib/questions"
 import { useGame } from "@/lib/store"
 import type { Choice, Privacy } from "@/lib/types"
 
@@ -38,7 +41,7 @@ export function KnowledgeScreen() {
         </section>
       ) : null}
       {me.answers.slice().reverse().slice(0, 12).map((answer) => {
-        const question = questionById(answer.questionId)
+        const question = findQuestion(answer.questionId)
         if (!question) return null
         return (
           <article key={answer.questionId} className="between">
@@ -47,7 +50,8 @@ export function KnowledgeScreen() {
           </article>
         )
       })}
-      <p className="muted">{QUESTIONS.length - me.answers.length} preguntas siguen en blanco. Ninguna es obligatoria: responde las que quieras.</p>
+      <p className="muted">{QUESTIONS.filter((question) => !me.answers.some((answer) => answer.questionId === question.id)).length} del banco fijo siguen en blanco. Ninguna es obligatoria.</p>
+      <Link href="/preguntas" className="btn btn-primary">30 de hoy, si quieres</Link>
     </div>
   )
 }
@@ -99,7 +103,8 @@ export function SettingsScreen() {
       <Toggle label="Sonidos" hint="Tonos cortos al acertar, subir de nivel o ganar." on={me.soundOn} onToggle={() => game.setSound(!me.soundOn)} />
       <Toggle label="Mis respuestas pueden alimentar predicciones" hint="Si lo apagas, sin respuesta real nadie recibe una predicción sobre ti." on={privacy.allowAi} onToggle={() => game.updatePrivacy({ allowAi: !privacy.allowAi })} />
       <Toggle label="Guardar lo que respondo en persona" hint="Si lo apagas, la sala no escribe en tu perfil." on={privacy.saveParty} onToggle={() => game.updatePrivacy({ saveParty: !privacy.saveParty })} />
-      <p className="muted">{game.linked ? "Sesión conectada con Supabase." : "La partida vive en este dispositivo hasta que conectes Supabase."} Nivel {levelFromXp(me.xp)}.</p>
+      <p className="muted">{game.linked ? "Sesión conectada con Supabase." : "La partida vive en este dispositivo hasta que conectes Supabase."} Tu acceso queda guardado aquí. Nivel {levelFromXp(me.xp)}.</p>
+      <InstallApp />
       <button className="btn btn-ghost" type="button" onClick={() => { void game.signOut().then(() => router.push("/")) }}>
         Cerrar sesión
       </button>

@@ -170,6 +170,7 @@ export function ProfileScreen() {
       <SeasonStrip />
       <div className="grid-2">
         <Link href="/knowledge" className="btn btn-ghost">Conocimiento</Link>
+        <Link href="/preguntas" className="btn btn-ghost">Preguntas de hoy</Link>
         <Link href="/achievements" className="btn btn-ghost">Logros</Link>
         <Link href="/evolution" className="btn btn-ghost">Cómo has cambiado</Link>
         <Link href="/recall" className="btn btn-ghost">Predícete</Link>

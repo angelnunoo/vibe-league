@@ -1,3 +1,4 @@
+import { dailyQuestionById } from "@/lib/daily-pack"
 import { questionById, type Question } from "@/lib/questions"
 
 function q(
@@ -117,7 +118,7 @@ export function eventQuestion(id: string) {
 }
 
 export function findQuestion(id: string) {
-  return questionById(id) ?? eventQuestion(id)
+  return questionById(id) ?? eventQuestion(id) ?? dailyQuestionById(id)
 }
 
 export function questionIsLiveEvent(id: string, date = new Date()) {

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { InstallApp } from "@/components/install-app"
 import { Guard } from "@/components/shell"
 import { useGame } from "@/lib/store"
 
@@ -42,6 +43,7 @@ export function AuthScreen() {
             </p>
             {game.rememberedEmail ? <p className="muted" style={{ margin: 0 }}>Este móvil ya te reconoce como {game.rememberedEmail}.</p> : null}
           </section>
+          <InstallApp />
           <form className="stack" onSubmit={submit}>
             {mode === "up" ? (
               <label>
